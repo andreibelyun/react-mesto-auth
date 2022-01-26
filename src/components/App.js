@@ -10,6 +10,10 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmDeletePopup from './ConfirmDeletePopup';
 
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import Login from './Login';
+import { Route, Switch } from 'react-router-dom';
 function App() {
 
     const [currentUser, setCurrentUser] = useState({});
@@ -120,7 +124,25 @@ function App() {
         <div className="page__container">
             <CurrentUserContext.Provider value={currentUser}>
                 <Header />
-                <Main
+                <Switch>
+                    <Route exact path="/">
+                        <InfoTooltip success={true}/>
+                        
+                    </Route>
+                    <Route path="/sign-up">
+                        <Register />
+                    </Route>
+                    <Route path="/sign-in">
+                        <Login />
+                    </Route>
+                    <Route path="*">
+                        <InfoTooltip success={false}/>
+                    </Route>
+                </Switch>
+                {/* <Register /> */}
+                {/* <InfoTooltip /> */}
+                {/* <Login /> */}
+                {/* <Main
                     onEditAvatar = {handleEditAvatarClick}
                     onEditProfile = {handleEditProfileClick}
                     onAddPlace = {handleAddPlaceClick}
@@ -154,7 +176,7 @@ function App() {
                     onClose={closeAllPopups}
                 />
 
-                <ConfirmDeletePopup />
+                <ConfirmDeletePopup /> */}
 
             </CurrentUserContext.Provider>
         </div>
