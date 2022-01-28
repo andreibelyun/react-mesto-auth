@@ -1,21 +1,27 @@
-import { Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import './styles/Header.css';
 
-function Header() {
+function Header(props) {
     return (
         <header className="header">
-            <a className="header__logo" href="#" target="_blank"></a>
+            <a className="header__logo" href="#" target="_self"></a>
             <Switch>
                 <Route path="/sign-in">
-                    <a className="header__link" href="#" target="_blank">Регистрация</a>
+                    <Link to="/sign-up" className="header__link">
+                        Регистрация
+                    </Link>
                 </Route>
                 <Route path="/sign-up">
-                    <a className="header__link" href="#" target="_blank">Войти</a>
+                    <Link to="/sign-in" className="header__link">
+                        Войти
+                    </Link>
                 </Route>
                 <Route path="/">
                     <div className='header__right-group'>
-                        <p className='header__email'>abc@mail.ru</p>
-                        <a className="header__link header__link_type_sign-out" href="#" target="_blank">Выйти</a>
+                        <p className='header__email'>{props.email}</p>
+                        <Link to="/sign-in" className="header__link" onClick={props.handleSignout}>
+                            Выйти
+                        </Link>
                     </div>
                 </Route>
             </Switch>
