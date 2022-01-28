@@ -44,6 +44,10 @@
     padding: 0;
 }
 
+.tooltip__close:hover {
+    cursor: pointer;
+}
+
 .tooltip__image {
     margin: 60px auto 32px;
     object-fit: cover;

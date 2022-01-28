@@ -149,9 +149,9 @@ function App() {
 
     const onLogin = (username, password) => {
         login(username, password)
-            .then((res) => {
+            .then((data) => {
                 setEmail(username);
-                localStorage.setItem("jwt", res.token);
+                localStorage.setItem("jwt", data.token);
                 setLoggedIn(true);
                 history.push("/");
             })
@@ -166,14 +166,13 @@ function App() {
     const onTooltipClose = () => {
         setTooltip({
             status: "",
-            isOpen: "false"
+            isOpen: false
         });
     };
 
     const handleSignOut = () => {
-        localStorage.removeItem('jwt');
+        localStorage.removeItem("jwt");
         setLoggedIn(false);
-        history.push("/sign-in");
     };
 
     const handleTokenCheck = () => {
@@ -181,7 +180,8 @@ function App() {
             const jwt = localStorage.getItem("jwt");
 
             checkToken(jwt)
-                .then(() => {
+                .then((res) => {
+                    setEmail(res.data.email); //чтобы получить email и после закрытия/открытия
                     setLoggedIn(true);
                     history.push("/");
                 });
@@ -208,46 +208,45 @@ function App() {
                         <InfoTooltip status={tooltip.status} isOpen={tooltip.isOpen} onClose={onTooltipClose} />
                     </Route>
 
-                    <Route exact path="/">
-                        <ProtectedRoute
-                            exact path="/"
-                            loggedIn={loggedIn}
-                        >
-                            <Main
-                                onEditAvatar={handleEditAvatarClick}
-                                onEditProfile={handleEditProfileClick}
-                                onAddPlace={handleAddPlaceClick}
-                                onCardClick={handleCardClick}
-                                cards={cards}
-                                onCardLike={handleCardLike}
-                                onCardDelete={handleDeleteClick}
-                            />
-                            <Footer />
-                            <EditProfilePopup
-                                isOpen={isEditProfilePopupOpen}
-                                onClose={closeAllPopups}
-                                onUpdateUser={handleUpdateUser}
-                            />
-                            <EditAvatarPopup
-                                isOpen={isEditAvatarPopupOpen}
-                                onClose={closeAllPopups}
-                                onUpdateAvatar={handleUpdateAvatar}
-                            />
-                            <AddPlacePopup
-                                isOpen={isAddPlacePopupOpen}
-                                onClose={closeAllPopups}
-                                onAddPlace={handleAddPlaceSubmit}
-                            />
-                            <ImagePopup
-                                card={selectedCard}
-                                onClose={closeAllPopups}
-                            />
-                            <ConfirmDeletePopup />
-                        </ProtectedRoute>
 
-                        <Route path="*">
-                            <Redirect to="/" />
-                        </Route>
+                    <ProtectedRoute
+                        exact path="/"
+                        loggedIn={loggedIn}
+                    >
+                        <Main
+                            onEditAvatar={handleEditAvatarClick}
+                            onEditProfile={handleEditProfileClick}
+                            onAddPlace={handleAddPlaceClick}
+                            onCardClick={handleCardClick}
+                            cards={cards}
+                            onCardLike={handleCardLike}
+                            onCardDelete={handleDeleteClick}
+                        />
+                        <Footer />
+                        <EditProfilePopup
+                            isOpen={isEditProfilePopupOpen}
+                            onClose={closeAllPopups}
+                            onUpdateUser={handleUpdateUser}
+                        />
+                        <EditAvatarPopup
+                            isOpen={isEditAvatarPopupOpen}
+                            onClose={closeAllPopups}
+                            onUpdateAvatar={handleUpdateAvatar}
+                        />
+                        <AddPlacePopup
+                            isOpen={isAddPlacePopupOpen}
+                            onClose={closeAllPopups}
+                            onAddPlace={handleAddPlaceSubmit}
+                        />
+                        <ImagePopup
+                            card={selectedCard}
+                            onClose={closeAllPopups}
+                        />
+                        <ConfirmDeletePopup />
+                    </ProtectedRoute>
+
+                    <Route path="*">
+                        <Redirect to="/" />
                     </Route>
                 </Switch>
             </CurrentUserContext.Provider>

@@ -8,32 +8,32 @@ function checkResponse(res) {
     }
 }
 
-export function register(userame, password) {
+export function register(username, password) {
     return fetch(`${baseUrl}/signup`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "password": password,
-            "email": userame
+            password: password,
+            email: username
         })
     })
-        .then(res => { checkResponse(res) });
+        .then((res) => checkResponse(res));
 }
 
-export function login(userame, password) {
+export function login(username, password) {
     return fetch(`${baseUrl}/signin`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "password": password,
-            "email": userame
+            password: password,
+            email: username
         })
     })
-        .then(res => { checkResponse(res) });
+        .then(res => checkResponse(res));
 }
 
 export function checkToken(jwt) {
@@ -44,5 +44,5 @@ export function checkToken(jwt) {
             "Authorization": `Bearer ${jwt}`
         }
     })
-        .then(res => { checkResponse(res) });
+        .then(res => checkResponse(res));
 }

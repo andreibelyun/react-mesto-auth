@@ -20,10 +20,11 @@ export default function Login({ onLogin }) {
 
         onLogin(values.username, values.password);
     };
+    
     return (
         <div className="login">
             <h2 className="login__title">Вход</h2>
-            <form className="login__form">
+            <form className="login__form" onSubmit={handleSubmit}>
                 <input
                     className="login__input"
                     name="username"
@@ -44,9 +45,8 @@ export default function Login({ onLogin }) {
                 />
                 <button
                     className="login__sign-in"
-                    type="button"
-                    aria-label="Зарегистрироваться"
-                    onClick={handleSubmit}
+                    type="submit"
+                    aria-label="Войти"
                 >
                     Войти
                 </button>
